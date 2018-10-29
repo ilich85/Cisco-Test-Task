@@ -9,14 +9,14 @@ import java.util.List;
 
 class Init {
 
-    List<String> init(String filename) {
-        List<String> wordsList = new ArrayList<>();
+    List<String> wordsList(String filename) {
+        List<String> words = new ArrayList<>();
         try {
             Files.lines(Paths.get(filename)).forEach(
-                    s -> wordsList.addAll(Arrays.asList(s.split("[-,.!?();:'\" ]"))));
+                    s -> words.addAll(Arrays.asList(s.split("[-,.!?();:'\" ]"))));
         } catch (IOException e) {
             return null;
         }
-        return wordsList;
+        return words;
     }
 }
