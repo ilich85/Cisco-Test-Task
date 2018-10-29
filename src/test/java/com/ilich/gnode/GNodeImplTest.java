@@ -6,30 +6,33 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class GNodeImplTest {
-    private GNodeImpl aNode;
-    private GNodeImpl bNode;
-    private GNodeImpl cNode;
 
+    private GNodeImpl aNode;
+    private GNodeAddChild addChild;
+    private GNodeProcess process;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
+        addChild = new GNodeAddChild();
+        process = new GNodeProcess();
         aNode = new GNodeImpl("A");
-        bNode = new GNodeImpl("B");
-        cNode = new GNodeImpl("C");
+        GNodeImpl bNode = new GNodeImpl("B");
+        GNodeImpl cNode = new GNodeImpl("C");
         GNodeImpl dNode = new GNodeImpl("D");
-        GNode eNode = new GNodeImpl("E");
-        GNode fNode = new GNodeImpl("F");
-        GNode gNode = new GNodeImpl("G");
-        GNode hNode = new GNodeImpl("H");
-        GNode iNode = new GNodeImpl("I");
-        aNode.addChild(bNode);
-        aNode.addChild(cNode);
-        aNode.addChild(dNode);
-        bNode.addChild(eNode);
-        bNode.addChild(fNode);
-        cNode.addChild(gNode);
-        cNode.addChild(hNode);
-        cNode.addChild(iNode);
+        GNodeImpl eNode = new GNodeImpl("E");
+        GNodeImpl fNode = new GNodeImpl("F");
+        GNodeImpl gNode = new GNodeImpl("G");
+        GNodeImpl hNode = new GNodeImpl("H");
+        GNodeImpl iNode = new GNodeImpl("I");
+
+        addChild.add(aNode, bNode);
+        addChild.add(aNode, cNode);
+        addChild.add(aNode, dNode);
+        addChild.add(bNode, eNode);
+        addChild.add(bNode, fNode);
+        addChild.add(cNode, gNode);
+        addChild.add(cNode, hNode);
+        addChild.add(cNode, iNode);
     }
 
     @Test
@@ -43,18 +46,18 @@ public class GNodeImplTest {
     }
 
     @Test
-    public void addChild() {
-        aNode.addChild(new GNodeImpl("NEW"));
+    public void add() {
+        addChild.add(aNode, new GNodeImpl("NEW"));
         assertEquals(4, aNode.getChildren().length);
     }
 
     @Test
     public void walkGraph() {
-        assertEquals(3, bNode.walkGraph(bNode).size());
+        assertEquals(9, process.walkGraph(aNode).size());
     }
 
     @Test
     public void paths() {
-        assertEquals(3, cNode.paths(cNode).size());
+        assertEquals(6, process.paths(aNode).size());
     }
 }

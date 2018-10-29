@@ -12,7 +12,7 @@ public class WordsCountTest {
     @Before
     public void setUp() {
         wordsCount = new WordsCount();
-        init=new Init();
+        init = new Init();
     }
 
     @Test
