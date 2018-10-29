@@ -30,8 +30,8 @@ public class GNodeImpl implements GNode {
         return children;
     }
 
-    @Override
-    public void addChild(GNode child) {
+
+     void addChild(GNode child) {
         list.add(child);
         children = new GNode[list.size()];
         for (int i = 0; i < list.size(); i++) {
@@ -39,8 +39,8 @@ public class GNodeImpl implements GNode {
         }
     }
 
-    @Override
-    public ArrayList paths(GNode node) {
+
+     ArrayList paths(GNode node) {
         int prevChild;
         if (map.get(node.getName()) == null) {
             prevChild = 0;
@@ -72,8 +72,8 @@ public class GNodeImpl implements GNode {
         return paths;
     }
 
-    @Override
-    public ArrayList walkGraph(GNode gNode) {
+
+     ArrayList<String> walkGraph(GNode gNode) {
         paths(gNode);
         return new ArrayList(map.keySet());
     }

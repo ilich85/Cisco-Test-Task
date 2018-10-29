@@ -6,9 +6,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class GNodeImplTest {
-    private GNode aNode;
-    private GNode bNode;
-    private GNode cNode;
+    private GNodeImpl aNode;
+    private GNodeImpl bNode;
+    private GNodeImpl cNode;
 
 
     @Before
@@ -16,7 +16,7 @@ public class GNodeImplTest {
         aNode = new GNodeImpl("A");
         bNode = new GNodeImpl("B");
         cNode = new GNodeImpl("C");
-        GNode dNode = new GNodeImpl("D");
+        GNodeImpl dNode = new GNodeImpl("D");
         GNode eNode = new GNodeImpl("E");
         GNode fNode = new GNodeImpl("F");
         GNode gNode = new GNodeImpl("G");
@@ -51,11 +51,10 @@ public class GNodeImplTest {
     @Test
     public void walkGraph() {
         assertEquals(3, bNode.walkGraph(bNode).size());
-
     }
 
     @Test
     public void paths() {
-        assertEquals(3,cNode.paths(cNode).size());
+        assertEquals(3, cNode.paths(cNode).size());
     }
 }

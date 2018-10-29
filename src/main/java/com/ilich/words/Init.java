@@ -1,32 +1,21 @@
 package com.ilich.words;
 
-import java.io.*;
-import java.net.URL;
-import java.nio.charset.Charset;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 class Init {
 
-    static List<String> initArray(String filename) {
-        URL url = ClassLoader.getSystemResource(filename);
+    List<String> init(String filename) {
         List<String> wordsList = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(
-                new FileInputStream(new File(url.getFile())), Charset.forName("UTF-8")))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                line = line.replace(",", " ")
-                        .replace(".", " ")
-                        .replace("!", " ")
-                        .replace("?", " ")
-                        .replace(";", " ")
-                        .replace(":", " ")
-                        .replace("-", " ");
-                wordsList.addAll(Arrays.asList(line.split(" ")));
-            }
+        try {
+            Files.lines(Paths.get(filename)).forEach(
+                    s -> wordsList.addAll(Arrays.asList(s.split("[-,.!?();:'\" ]"))));
         } catch (IOException e) {
-            e.printStackTrace();
+            return null;
         }
         return wordsList;
     }
