@@ -8,12 +8,10 @@ import static org.junit.Assert.*;
 public class GNodeImplTest {
 
     private GNodeImpl aNode;
-    private GNodeAddChild addChild;
     private GNodeProcess process;
 
     @Before
     public void setUp() {
-        addChild = new GNodeAddChild();
         process = new GNodeProcess();
         aNode = new GNodeImpl("A");
         GNodeImpl bNode = new GNodeImpl("B");
@@ -25,14 +23,14 @@ public class GNodeImplTest {
         GNodeImpl hNode = new GNodeImpl("H");
         GNodeImpl iNode = new GNodeImpl("I");
 
-        addChild.add(aNode, bNode);
-        addChild.add(aNode, cNode);
-        addChild.add(aNode, dNode);
-        addChild.add(bNode, eNode);
-        addChild.add(bNode, fNode);
-        addChild.add(cNode, gNode);
-        addChild.add(cNode, hNode);
-        addChild.add(cNode, iNode);
+        aNode.add(bNode);
+        aNode.add(cNode);
+        aNode.add(dNode);
+        bNode.add(eNode);
+        bNode.add(fNode);
+        cNode.add(gNode);
+        cNode.add(hNode);
+        cNode.add(iNode);
     }
 
     @Test
@@ -47,17 +45,17 @@ public class GNodeImplTest {
 
     @Test
     public void add() {
-        addChild.add(aNode, new GNodeImpl("NEW"));
+        aNode.add(new GNodeImpl("NEW"));
         assertEquals(4, aNode.getChildren().length);
     }
 
     @Test
     public void walkGraph() {
-        assertEquals(9, process.walkGraph(aNode).size());
+        assertEquals(9, process.printNodes(aNode));
     }
 
     @Test
     public void paths() {
-        assertEquals(6, process.paths(aNode).size());
+        assertEquals(6, process.printPaths(aNode));
     }
 }

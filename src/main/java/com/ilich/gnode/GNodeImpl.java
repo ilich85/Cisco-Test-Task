@@ -22,7 +22,11 @@ public class GNodeImpl implements GNode {
         return children.toArray(new GNode[0]);
     }
 
-    void setChildren(GNode children) {
+    void add(GNode child) {
+        this.setChildren(child);
+    }
+
+    private void setChildren(GNode children) {
         this.children.add(children);
     }
 

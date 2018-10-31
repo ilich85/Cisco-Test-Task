@@ -10,48 +10,57 @@ import static java.lang.String.valueOf;
 class GNodeProcess {
 
     private GNode prevNode;
+    private GNodePrinter printer = new GNodePrinter();
     private List<GNode> path = new ArrayList<>();
     private List<ArrayList> paths = new ArrayList<>();
-    private Map<String, Integer> map = new HashMap<>();
+    private Map<String, Integer> nodes = new HashMap<>();
 
-    Map<String, Integer> walkGraph(GNode node) {
+    int printNodes(GNode node) {
         process(node);
-        return map;
+        printer.printMap(nodes);
+        return nodes.size();
     }
 
-    List<ArrayList> paths(GNode node) {
+    int printPaths(GNode node) {
         process(node);
-        return paths;
+        printer.printList(paths);
+        return paths.size();
+    }
+
+
+    private void paths(GNode node) {
+        process(node);
+
     }
 
     private void process(GNode node) {
         int prevChild;
-        if (map.get(node.getName()) == null) {
+        if (nodes.get(node.getName()) == null) {
             prevChild = 0;
         } else {
-            prevChild = map.get(node.getName());
+            prevChild = nodes.get(node.getName());
         }
-        map.put(node.getName(), prevChild);
+        nodes.put(node.getName(), prevChild);
         GNode[] childs = node.getChildren();
 
         if (childs.length == 0) {
             paths.add(new ArrayList(path));
             path.remove(path.size() - 1);
-            map.put(prevNode.getName(), map.get(prevNode.getName()) + 1);
+            nodes.put(prevNode.getName(), nodes.get(prevNode.getName()) + 1);
             paths(prevNode);
             return;
         }
-        if (map.get(node.getName()) < childs.length) {
+        if (nodes.get(node.getName()) < childs.length) {
             if (path.size() == 0) {
                 path.add(node);
             }
-            path.add(childs[map.get(node.getName())]);
+            path.add(childs[nodes.get(node.getName())]);
             prevNode = node;
-            paths(childs[map.get(node.getName())]);
+            paths(childs[nodes.get(node.getName())]);
         } else if (path.size() > 1) {
             prevNode = path.get(path.size() - 2);
             path.remove(path.size() - 1);
-            map.merge(valueOf(prevNode), 1, (a, b) -> a + b);
+            nodes.merge(valueOf(prevNode), 1, (a, b) -> a + b);
             paths(prevNode);
         }
     }
