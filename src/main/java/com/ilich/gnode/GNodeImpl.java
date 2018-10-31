@@ -23,11 +23,7 @@ public class GNodeImpl implements GNode {
     }
 
     void add(GNode child) {
-        this.setChildren(child);
-    }
-
-    private void setChildren(GNode children) {
-        this.children.add(children);
+        this.children.add(child);
     }
 
     @Override
